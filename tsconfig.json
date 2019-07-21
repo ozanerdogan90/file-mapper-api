@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "target": "es6",
+        "sourceMap": true,
+        "plugins": [
+            {
+                "name": "tslint-language-service"
+            }
+        ],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
