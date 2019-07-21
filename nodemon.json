@@ -1,5 +1,15 @@
 {
-    "watch": ["src"],
+    "watch": [
+        "src/**/*.ts",
+        "src/**/*.yaml"
+    ],
+    "ignore": [
+        "src/**/*.spec.ts"
+    ],
+    "verbose": true,
+    "exec": "ts-node src/server.ts",
     "ext": "ts",
-    "exec": "ts-node ./src/config/server/index.ts"
+    "events": {
+        "restart": "npm run lint"
+    }
 }

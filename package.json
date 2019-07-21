@@ -22,19 +22,19 @@
   "homepage": "https://github.com/ChechaValerii/node-typescript-mongodb#readme",
   "scripts": {
     "build": "tsc --skipLibCheck",
-    "start": "tsc --skipLibCheck && node ./dist/server.js",
-    "start-dev": "nodemon -e ts -w ./src -i 'src/**/*.spec.ts' -x ts-node -- ./src/server.ts",
+    "start": "tsc --skipLibCheck && node ./dist/index.js",
+    "start-dev": "nodemon -e ts -w ./src -i 'src/**/*.spec.ts' -x ts-node -- ./src/index.ts",
     "ts:watch": "tsc -w",
     "test": "NODE_ENV=test mocha -r ts-node/register test/index.js --exit",
-    "prettier": "prettier --write --single-quote src/**/*.ts",
     "precommit": "lint-staged",
-    "test:coverage": "nyc npm t"
+    "test:coverage": "nyc npm t",
+    "lint": "tslint -p tsconfig.json src/**/*.ts"
   },
-  "lint-staged": {
-    "*.ts": [
-      "tslint src/**/*.ts",
-      "prettier --write --single-quote --fix src/**/*.ts",
-      "nyc npm t"
+  "pre-push": {
+    "run": [
+      "prettier",
+      "lint",
+      "test:coverage"
     ]
   },
   "nyc": {
@@ -114,10 +114,10 @@
     "@types/swagger-ui-express": "3.0.0",
     "@types/yeoman-generator": "3.1.0",
     "chai": "4.2.0",
-    "husky": "^3.0.1",
     "jsdoc": "3.5.5",
     "nodemon": "^1.18.10",
     "nyc": "^14.1.1",
+    "pre-push": "^0.1.1",
     "prettier": "1.18.2",
     "source-map-loader": "0.2.4",
     "supertest": "4.0.2",
@@ -125,6 +125,8 @@
     "swagger-ui-express": "4.0.2",
     "tslint": "5.8.0",
     "tslint-config-airbnb": "5.8.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
     "tslint-eslint-rules": "5.4.0",
     "typescript": "3.4.3"
   }

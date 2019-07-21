@@ -1,8 +1,7 @@
-import UserService from './service';
+import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../../config/error';
 import { IUserModel } from './model';
-import { NextFunction, Request, Response } from 'express';
-
+import UserService from './service';
 /**
  * @export
  * @param {Request} req
