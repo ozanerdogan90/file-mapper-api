@@ -33,7 +33,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "tslint src/**/*.ts",
+      "npm run lint",
       "prettier --write --single-quote --fix src/**/*.ts",
       "nyc npm t"
     ]
