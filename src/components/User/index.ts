@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import * as Joi from 'joi';
 import { HttpError } from '../../config/error';
 import { IUserModel } from './model';
 import UserService from './service';
@@ -34,7 +35,7 @@ export async function findOne(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+) {
   try {
     const user: IUserModel = await UserService.findOne(req.params.id);
 
@@ -84,4 +85,24 @@ export async function remove(
   } catch (error) {
     next(new HttpError(error.message.status, error.message));
   }
+}
+
+export const singleUserSchema = {
+  params: {
+    id: Joi.string().guid({
+      version: [
+        'uuidv4'
+      ]
+    }).required()
+  },
+}
+
+export const createUserSchema = {
+  body: {
+    email: Joi.string().email().required(),
+    password: Joi.string().min(1).max(255).required(),
+    name: Joi.string().min(1).max(255).required(),
+    gender: Joi.string().max(1).required(),
+    birthday: Joi.date().required()
+  },
 }
