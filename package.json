@@ -27,7 +27,6 @@
     "ts:watch": "tsc -w",
     "test": "NODE_ENV=test mocha -r ts-node/register test/index.js --exit",
     "prettier": "prettier --write --single-quote src/**/*.ts",
-    "precommit": "lint-staged",
     "test:coverage": "nyc npm t",
     "lint": "tslint -p tsconfig.json src/**/*.ts"
   },
@@ -70,6 +69,7 @@
     "src"
   ],
   "dependencies": {
+    "@types/jsonwebtoken": "^8.3.2",
     "bcrypt": "3.0.4",
     "body-parser": "1.18.2",
     "compression": "1.7.1",
@@ -81,6 +81,7 @@
     "express-session": "1.15.6",
     "helmet": "3.9.0",
     "joi": "14.3.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "5.4.0",
     "node-dependency-injection": "^2.3.5",
     "node-dependency-injection-express-middleware": "^1.2.0",

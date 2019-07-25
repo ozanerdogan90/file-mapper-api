@@ -1,100 +1,49 @@
-import * as Joi from 'joi';
-import UserModel, { IUserModel } from './model';
-import UserValidation from './validation';
-import { IUserService } from './interface';
-import { Types } from 'mongoose';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import config from '../../config/env';
+import { AppError } from '../../types/error/app-error';
+import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import User, { IUser } from './model';
 
-/**
- * @export
- * @implements {IUserModelService}
- */
-const UserService: IUserService = {
-  /**
-   * @returns {Promise < IUserModel[] >}
-   * @memberof UserService
-   */
-  async findAll(): Promise<IUserModel[]> {
-    try {
-      return await UserModel.find({});
-    } catch (error) {
-      throw new Error(error.message);
+export async function check(email: string, password: string) {
+  User.findById(email).then(user => {
+    if (!user) {
+      throw new AppError('Unauthorized', HttpStatusCodes.Unauthorized, 'No user found, email :' + email);
     }
-  },
 
-  /**
-   * @param {string} id
-   * @returns {Promise < IUserModel >}
-   * @memberof UserService
-   */
-  async findOne(id: string): Promise<IUserModel> {
-    try {
-      const validate: Joi.ValidationResult<{
-        id: string;
-      }> = UserValidation.getUser({
-        id
-      });
-
-      if (validate.error) {
-        throw new Error(validate.error.message);
-      }
-
-      return await UserModel.findOne({
-        _id: Types.ObjectId(id)
-      });
-    } catch (error) {
-      throw new Error(error.message);
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+    if (!passwordIsValid) {
+      throw new AppError('Unauthorized', HttpStatusCodes.Unauthorized, 'No user found, email :' + email);
     }
-  },
 
-  /**
-   * @param {IUserModel} user
-   * @returns {Promise < IUserModel >}
-   * @memberof UserService
-   */
-  async insert(body: IUserModel): Promise<IUserModel> {
-    try {
-      const validate: Joi.ValidationResult<
-        IUserModel
-      > = UserValidation.createUser(body);
-
-      if (validate.error) {
-        throw new Error(validate.error.message);
-      }
-
-      const user: IUserModel = await UserModel.create(body);
-
-      return user;
-    } catch (error) {
-      throw new Error(error.message);
+    return jwt.sign({ id: user._id }, config.secret, {
+      expiresIn: config.tokenTime
+    });
+  }).catch(err => {
+    if (err) {
+      throw err;
     }
-  },
-
-  /**
-   * @param {string} id
-   * @returns {Promise < IUserModel >}
-   * @memberof UserService
-   */
-  async remove(id: string): Promise<IUserModel> {
-    try {
-      const validate: Joi.ValidationResult<{
-        id: string;
-      }> = UserValidation.removeUser({
-        id
-      });
-
-      if (validate.error) {
-        throw new Error(validate.error.message);
-      }
-
-      const user: IUserModel = await UserModel.findOneAndRemove({
-        _id: Types.ObjectId(id)
-      });
-
-      return user;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
+  });
 };
 
-export default UserService;
+export async function findUser(email: string) {
+  return User.findById(email).then(user => user).catch(err => {
+    if (err) {
+      throw err;
+    }
+  });
+};
+
+export async function findAll() {
+  return User.find().then(users => users).catch(err => {
+    if (err) {
+      throw err;
+    }
+  });
+};
+
+export async function add(email: string, password: string, name: string) {
+  const user = { email, password: bcrypt.hashSync(password, config.secret), name };
+
+  return User.create(user);
+}

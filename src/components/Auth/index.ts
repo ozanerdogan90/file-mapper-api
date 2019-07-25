@@ -1,61 +1,4 @@
-import * as passport from 'passport';
-import AuthService from './service';
-import HttpError from '../../config/error';
-import { IUserModel } from '../User/model';
 import { NextFunction, Request, Response } from 'express';
-/**
- *
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction}next
- * @param {IUserModel} user
- * @param {string} resMessage
- */
-function passportRequestLogin(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-  user: IUserModel,
-  resMessage: string
-): void {
-  return req.logIn(user, err => {
-    if (err) return next(new HttpError(err));
-
-    res.json({
-      status: 200,
-      logged: true,
-      message: resMessage
-    });
-  });
-}
-
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction} next
- * @returns {Promise < void >}
- */
-export async function signup(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> {
-  try {
-    const user: IUserModel = await AuthService.createUser(req.body);
-
-    passportRequestLogin(req, res, next, user, 'Sign in successfull');
-  } catch (error) {
-    if (error.code === 500) {
-      return next(new HttpError(error.message.status, error.message));
-    }
-    res.json({
-      status: 400,
-      message: error.message
-    });
-  }
-}
-
 /**
  * @export
  * @param {Request} req
@@ -67,48 +10,23 @@ export async function login(
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
-  passport.authenticate('local', (err: Error, user: IUserModel) => {
-    if (err) {
-      return next(new HttpError(400, err.message));
-    }
+): Promise<string> {
+  ser.findOne({ email: req.body.email }, function (err, user) {
+    if (err) return res.status(500).send('Error on the server.');
+    if (!user) return res.status(404).send('No user found.');
 
-    if (!user) {
-      return res.json({
-        status: 401,
-        logged: false,
-        message: 'Invalid credentials!'
-      });
-    }
-    passportRequestLogin(req, res, next, user, 'Sign in successfull');
-  })(req, res, next);
-}
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction} next
- * @returns {Promise < void >}
- */
-export async function logout(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> {
-  if (!req.user) {
-    res.json({
-      status: 401,
-      logged: false,
-      message: "You are not authorized to app. Can't logout"
-    });
-  }
+    // check if the password is valid
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-  if (req.user) {
-    req.logout();
-    res.json({
-      status: 200,
-      logged: false,
-      message: 'Successfuly logged out!'
+    // if user is found and password is valid
+    // create a token
+    var token = jwt.sign({ id: user._id }, config.secret, {
+      expiresIn: 86400 // expires in 24 hours
     });
-  }
+
+    // return the information including token as JSON
+    res.status(200).send({ auth: true, token: token });
+  });
 }
+
