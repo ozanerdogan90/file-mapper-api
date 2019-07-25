@@ -1,4 +1,6 @@
-import * as AuthComponent from './Auth';
 import * as UserComponent from './User';
+import UserComponentRouting from './User/routing';
 
-export { AuthComponent, UserComponent };
+const routings = [...UserComponentRouting];
+
+export { UserComponent, routings };

@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { Container } from 'typedi';
-import { UserRepository } from '../components/User/repository';
+import * as jwt from 'jsonwebtoken';
+import { User } from '../components/User/model';
+import { Config } from '../config/env';
 import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
 
+// tslint:disable: await-promise
 function getToken(request: Request) {
     const token = request.headers.authorization;
     if (token && token.split(' ')[0] === 'Bearer') {
@@ -13,14 +15,18 @@ function getToken(request: Request) {
 }
 
 export async function authenticationMiddleware(request: Request, response: Response, next: NextFunction) {
-    const repo = Container.get(UserRepository);
     const token = getToken(request);
     if (token) {
-        const encodedData = window.atob(token);
-        if (repo.checkUserCredential(encodedData.split(';')[0], encodedData.split(';')[1])) {
-            next();
+        // tslint:disable-next-line: no-any
+        const decoded: any = await jwt.verify(token, Config.secret);
+        if (!decoded) return response.status(HttpStatusCodes.Unauthorized).end();
+        const user = await User.findOne({ 'email': decoded.email });
+        if (!user) return response.status(HttpStatusCodes.Unauthorized).end();
+        if (decoded.password !== user.password) {
+            return response.status(HttpStatusCodes.Unauthorized).end();
         }
+        next();
+    } else {
+        return response.status(HttpStatusCodes.Unauthorized).end();
     }
-
-    response.status(HttpStatusCodes.Unauthorized).end();
 }

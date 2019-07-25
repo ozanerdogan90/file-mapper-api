@@ -1,17 +1,24 @@
-import { Document, Mongoose } from 'mongoose';
+import * as bcrypt from 'bcrypt';
+import * as mongoose from 'mongoose';
 
-export interface IUser extends Document {
+export interface IUser extends mongoose.Document {
     name: string,
     email: string,
     password: string
 }
-
-const mongoose: Mongoose = new Mongoose();
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
+    name: { type: String, required: true },
+    email: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true }
 });
-mongoose.model('User', userSchema);
 
-export default mongoose.model<IUser>('User', userSchema);
+// tslint:disable-next-line: no-any
+userSchema.pre('save', function (next: any) {
+    if (!this.isModified('password') && !this.isNew) return;
+    const salt = bcrypt.genSaltSync();
+    this.password = bcrypt.hashSync(this.password, salt);
+
+    return next();
+});
+
+export const User: mongoose.Model<IUser> = mongoose.model<IUser>('User', userSchema, 'User');

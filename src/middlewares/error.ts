@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from '../types/error/app-error';
 import { Container } from 'typedi';
-import { Logger } from '../types/logger/logger';
+import { Logger } from 'winston';
+import { AppError } from '../types/error/app-error';
 
-export interface ErrorResult {
+export interface IErrorResult {
   ok: boolean;
   status: number;
   error: string;
@@ -13,13 +13,14 @@ export interface ErrorResult {
 
 // tslint:disable-next-line:typedef
 export function errorMiddleware(
+  // tslint:disable-next-line: no-any
   error: any,
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   const logger: Logger = Container.get('logger');
-  const result: ErrorResult = {
+  const result: IErrorResult = {
     ok: false,
     status: 500,
     error: error.constructor.name,
@@ -31,8 +32,6 @@ export function errorMiddleware(
     result.error = error.name;
     result.message = error.description;
   } else {
-    // This is some type of error that we don't expect!
-    // Hide the messy message from outside and just log it!
     result.message = 'Internal Server Error';
   }
 
