@@ -14,7 +14,6 @@ const endpoints: IEndpoint[] = [
         route: '/users',
         schema: UserComponent.createUserSchema,
         action: UserComponent.create,
-        auth: false,
         description: 'Create a new user',
     },
     {
