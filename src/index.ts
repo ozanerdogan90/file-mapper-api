@@ -24,7 +24,7 @@ process.addListener('uncaughtException', stop);
 
 
 // tslint:disable-next-line: no-floating-promises
-connectDb().then(async () => {
+connectDb().then(() => {
   server.listen(Config.port, (error: Error) => {
     if (error) {
       logger.error('Problem starting server', error);

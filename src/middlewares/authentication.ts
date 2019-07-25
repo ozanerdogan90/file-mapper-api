@@ -4,7 +4,6 @@ import { User } from '../components/User/model';
 import { Config } from '../config/env';
 import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
 
-// tslint:disable: await-promise
 function getToken(request: Request) {
     const token = request.headers.authorization;
     if (token && token.split(' ')[0] === 'Bearer') {

@@ -34,14 +34,14 @@ routings.forEach(endpoint => {
         middlewareList.push(validationMiddleware(schema));
     }
 
-    middlewareList.push(injectContainer(action));
+    middlewareList.push(injectAction(action));
     app[method](
         route,
         ...middlewareList
     );
 });
 
-export function injectContainer(action: Action) {
+export function injectAction(action: Action) {
     return (req: express.Request, res: express.Response, next: express.NextFunction) => {
         Promise
             .resolve(action(req, res, next))
