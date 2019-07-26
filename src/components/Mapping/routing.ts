@@ -10,6 +10,13 @@ const endpoints: IEndpoint[] = [
         description: 'Creates a new mapping schema',
     },
     {
+        method: Method.Put,
+        route: '/mappings/:name',
+        schema: controller.updateSchema,
+        action: controller.update,
+        description: 'Updates an existing mapping',
+    },
+    {
         method: Method.Delete,
         route: '/mappings/:name',
         schema: controller.nameBasedSchema,

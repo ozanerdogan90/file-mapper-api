@@ -15,8 +15,25 @@ export async function create(
 ): Promise<void> {
     const model = req.body as IMapping;
     const result = await service.create(model);
+    res.status(HttpStatusCodes.Created).json(result);
+}
+
+export async function update(req: Request,
+    res: Response,
+): Promise<void> {
+    const model = req.body as IMapping;
+    const name = req.params.name;
+    const result = await service.update(name, model);
     res.status(HttpStatusCodes.OK).json(result);
 }
+
+export async function remove(req: Request,
+    res: Response,
+): Promise<void> {
+    await service.remove(req.params.name);
+    res.status(HttpStatusCodes.OK).end();
+}
+
 
 const columnMappingSchema = Joi.object().keys({
     from: Joi.string().required(),
@@ -42,9 +59,6 @@ export const nameBasedSchema = {
     }
 }
 
-export async function remove(req: Request,
-    res: Response,
-): Promise<void> {
-    await service.remove(req.params.name);
-    res.status(HttpStatusCodes.OK).end();
+export const updateSchema = {
+    ...createSchema, ...nameBasedSchema
 }
