@@ -8,19 +8,19 @@ export enum Method {
     Delete = 'delete',
 }
 
-export interface ValidationSchema {
+export interface IValidationSchema {
     body?: object;
     params?: object;
     query?: object;
 }
 
-export interface Endpoint {
+export interface IEndpoint {
     method: Method;
     route: string;
     action: Action;
     auth?: boolean; // false: disable authentication for this route.
-    schema?: ValidationSchema; // for validating POST routes' fields
+    schema?: IValidationSchema; // for validating POST routes' fields
     description?: string; // for swagger
 }
 
-export type Action = (req: Request, res: Response, next: NextFunction) => any;
+export type Action = (req: Request, res: Response, next: NextFunction) => {};

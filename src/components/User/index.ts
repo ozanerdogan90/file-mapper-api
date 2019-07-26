@@ -6,7 +6,6 @@ import * as service from './service';
  * @export
  * @param {Request} req
  * @param {Response} res
- * @param {NextFunction} next
  * @returns {Promise < void >}
  */
 export async function findAll(
@@ -14,7 +13,6 @@ export async function findAll(
   res: Response,
 ): Promise<void> {
   const users = await service.findAll();
-
   res.status(HttpStatusCodes.OK).json(users);
 }
 
@@ -28,12 +26,14 @@ export async function findOne(
   req: Request,
   res: Response
 ) {
-  const user = await service.findUser(req.params.email);
 
+  const user = await service.findUser(req.params.email);
   if (!user) {
     res.status(HttpStatusCodes.NotFound);
 
+    return;
   }
+
   res.status(HttpStatusCodes.OK).json(user);
 }
 
@@ -47,13 +47,10 @@ export async function create(
   req: Request,
   res: Response
 ): Promise<void> {
-  try {
-    const user: IUserModel = await UserService.insert(req.body);
 
-    res.status(201).json(user);
-  } catch (error) {
-    next(new HttpError(error.message.status, error.message));
-  }
+  const user = await service.create(req.body.email, req.body.password, req.body.name);
+
+  res.status(HttpStatusCodes.Created).json(user);
 }
 
 /**
@@ -68,31 +65,22 @@ export async function remove(
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  try {
-    const user: IUserModel = await UserService.remove(req.params.id);
-
-    res.status(200).json(user);
-  } catch (error) {
-    next(new HttpError(error.message.status, error.message));
-  }
+  await service.remove(req.params.email);
+  res.status(HttpStatusCodes.OK);
 }
 
 export const singleUserSchema = {
   params: {
-    id: Joi.string().guid({
-      version: [
-        'uuidv4'
-      ]
-    }).required()
+    email: Joi.string().email().required()
   },
 }
 
+const defaulMaxLength = 255;
 export const createUserSchema = {
   body: {
     email: Joi.string().email().required(),
-    password: Joi.string().min(1).max(255).required(),
-    name: Joi.string().min(1).max(255).required(),
-    gender: Joi.string().max(1).required(),
-    birthday: Joi.date().required()
+    password: Joi.string().min(1).max(defaulMaxLength).required(),
+    name: Joi.string().min(1).max(defaulMaxLength).required()
   },
 }
+

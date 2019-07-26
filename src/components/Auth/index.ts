@@ -1,32 +1,54 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
+import * as Joi from 'joi';
+import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import * as service from './service';
 /**
  * @export
  * @param {Request} req
  * @param {Response} res
- * @param {NextFunction} next
  * @returns {Promise < void >}
  */
-export async function login(
+export async function generateToken(
   req: Request,
   res: Response,
-  next: NextFunction
-): Promise<string> {
-  ser.findOne({ email: req.body.email }, function (err, user) {
-    if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send('No user found.');
+): Promise<void> {
+  const token = await service.generateToken(req.body.email, req.body.password);
+  res.status(HttpStatusCodes.OK).json(token);
+}
 
-    // check if the password is valid
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+/**
+ * @export
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise < void >}
+ */
+export async function register(
+  req: Request,
+  res: Response
+) {
 
-    // if user is found and password is valid
-    // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
-      expiresIn: 86400 // expires in 24 hours
-    });
+  const user = await service.create(req.body.email, req.body.password, req.body.name);
+  if (!user) {
+    res.status(HttpStatusCodes.NotFound);
 
-    // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token });
-  });
+    return;
+  }
+
+  res.status(HttpStatusCodes.OK).json(user);
+}
+const defaulMaxLength = 255;
+export const generateTokenSchema = {
+  body: {
+    email: Joi.string().email().required(),
+    password: Joi.string().min(1).max(defaulMaxLength).required(),
+  },
+}
+
+export const registerSchema = {
+  body: {
+    email: Joi.string().email().required(),
+    password: Joi.string().min(1).max(defaulMaxLength).required(),
+    name: Joi.string().min(1).max(defaulMaxLength).required()
+  },
 }
 

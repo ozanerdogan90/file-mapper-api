@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import { parse } from 'querystring';
 
 dotenv.config();
 const defaultPort: number = 3000;
@@ -55,5 +54,4 @@ const config: {
   development,
   production
 };
-
-export default config[NODE_ENV];
+export const Config: IConfig = config[NODE_ENV];

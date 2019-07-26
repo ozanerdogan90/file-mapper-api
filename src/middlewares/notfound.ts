@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
 
-// tslint:disable-next-line:typedef
 export function notfoundMiddleware(request: Request, response: Response) {
-  response.status(404).json({
-    status: 404,
+  response.status(HttpStatusCodes.NotFound).json({
+    status: HttpStatusCodes.NotFound,
     message: `Resource "${request.path}" was not found.`
   });
 }

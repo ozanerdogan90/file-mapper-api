@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
 
 // tslint:disable-next-line:typedef
 export function corsMiddleware(
@@ -19,7 +20,7 @@ export function corsMiddleware(
     .append('Access-Control-Allow-Credentials', 'true');
 
   if (request.method === 'OPTIONS') {
-    return response.sendStatus(200);
+    return response.sendStatus(HttpStatusCodes.OK);
   }
   next();
 }

@@ -1,17 +1,17 @@
 import { UserComponent } from '..';
-import { Endpoint, Method } from '../../types/endpoint/endpoint';
+import { IEndpoint, Method } from '../../types/endpoint/endpoint';
 
-const endpoints: Endpoint[] = [
+const endpoints: IEndpoint[] = [
     {
         method: Method.Get,
-        route: 'users/:id',
+        route: '/users/:email',
         schema: UserComponent.singleUserSchema,
         action: UserComponent.findOne,
         description: 'Get user by id',
     },
     {
         method: Method.Post,
-        route: 'user',
+        route: '/users',
         schema: UserComponent.createUserSchema,
         action: UserComponent.create,
         description: 'Create a new user',
@@ -24,7 +24,7 @@ const endpoints: Endpoint[] = [
     },
     {
         method: Method.Delete,
-        route: 'users/:id',
+        route: '/users/:id',
         action: UserComponent.remove,
         schema: UserComponent.singleUserSchema,
         description: 'Delete user by id',

@@ -1,24 +1,40 @@
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { Config } from '../../config/env';
+import { AppError } from '../../types/error/app-error';
+import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import { User } from '../User/model';
 
-export async function login(
-  email: string,
-  password: string
-): Promise<string> {
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send('No user found.');
+export async function generateToken(email: string, password: string) {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError('InvalidUser', HttpStatusCodes.BadRequest, 'No user found');
+  }
+  if (!bcrypt.compareSync(password, user.password)) {
+    throw new AppError('InvalidPassword', HttpStatusCodes.BadRequest, 'Invalid Credential');
+  }
 
-    // check if the password is valid
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+  return jwt.sign({ email, password },
+    Config.secret,
+    {
+      expiresIn: 900
+    }
+  );
 
-    // if user is found and password is valid
-    // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
-      expiresIn: 86400 // expires in 24 hours
-    });
+};
 
-    // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token });
-  });
+export async function create(email: string, password: string, name: string) {
+  const user = { email, password, name };
+
+  return User.create(user);
+}
+
+export async function remove(email: string) {
+  const user = await this.findUser(email);
+  if (!user) {
+    throw new AppError('InvalidUser', HttpStatusCodes.NotFound, 'No user found, email :' + email);
+  }
+
+  return User.remove(user);
 }
 

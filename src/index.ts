@@ -1,9 +1,9 @@
 import * as express from 'express';
-import * as path from 'path';
 import Container from 'typedi';
 import { Logger } from 'winston';
 import { app } from './app';
-import config from './config/env';
+import { connectDb } from './config/connection/connection';
+import { Config } from './config/env';
 
 export const server: express.Application = app;
 
@@ -22,16 +22,19 @@ function stop(error: Error): void {
 process.addListener('unhandledRejection', stop);
 process.addListener('uncaughtException', stop);
 
-server.use('/swagger', express.static(path.join(__dirname, '..', 'swagger')));
 
-server.listen(config.port, (error: Error) => {
-  if (error) {
-    logger.error('Problem starting server', error);
+// tslint:disable-next-line: no-floating-promises
+connectDb().then(() => {
+  server.listen(Config.port, (error: Error) => {
+    if (error) {
+      logger.error('Problem starting server', error);
 
-    return;
-  }
+      return;
+    }
 
-  logger.info(
-    `server is listening on http://localhost:${config.port} in '${process.env.NODE_ENV}' mode`
-  );
+    logger.info(
+      `server is listening on http://localhost:${Config.port} in '${process.env.NODE_ENV}' mode`
+    );
+  });
+
 });
