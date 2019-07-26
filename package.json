@@ -69,7 +69,9 @@
     "src"
   ],
   "dependencies": {
+    "@types/express-fileupload": "^1.1.0",
     "@types/jsonwebtoken": "^8.3.2",
+    "@types/node-xlsx": "^0.12.1",
     "bcrypt": "3.0.4",
     "body-parser": "1.18.2",
     "compression": "1.7.1",
@@ -78,6 +80,7 @@
     "cors": "2.8.5",
     "dotenv": "4.0.0",
     "express": "4.16.2",
+    "express-fileupload": "^1.1.5",
     "express-session": "1.15.6",
     "helmet": "3.9.0",
     "joi": "14.3.0",
@@ -85,13 +88,15 @@
     "mongoose": "5.4.0",
     "node-dependency-injection": "^2.3.5",
     "node-dependency-injection-express-middleware": "^1.2.0",
+    "node-xlsx": "^0.15.0",
     "passport": "0.4.0",
     "passport-local": "1.0.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "6.0.3",
     "typedi": "^0.8.0",
     "util": "0.11.1",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "xlsx": "^0.14.4"
   },
   "devDependencies": {
     "@types/bcrypt": "3.0.0",

@@ -34,6 +34,12 @@ export async function remove(req: Request,
     res.status(HttpStatusCodes.OK).end();
 }
 
+export async function get(req: Request,
+    res: Response,
+): Promise<void> {
+    const result = await service.get(req.params.name);
+    res.status(HttpStatusCodes.OK).json(result);
+}
 
 const columnMappingSchema = Joi.object().keys({
     from: Joi.string().required(),

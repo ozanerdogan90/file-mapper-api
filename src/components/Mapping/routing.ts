@@ -17,6 +17,13 @@ const endpoints: IEndpoint[] = [
         description: 'Updates an existing mapping',
     },
     {
+        method: Method.Get,
+        route: '/mappings/:name',
+        schema: controller.nameBasedSchema,
+        action: controller.get,
+        description: 'Gets a mapping by name',
+    },
+    {
         method: Method.Delete,
         route: '/mappings/:name',
         schema: controller.nameBasedSchema,
