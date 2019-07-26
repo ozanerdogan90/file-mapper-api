@@ -21,4 +21,4 @@ userSchema.pre('save', function (next: any) {
     return next();
 });
 
-export const User: mongoose.Model<IUser> = mongoose.model<IUser>('User', userSchema, 'User');
+export const User: mongoose.Model<IUser> = mongoose.model<IUser>('User', userSchema);

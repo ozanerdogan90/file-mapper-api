@@ -21,7 +21,7 @@ const endpoints: IEndpoint[] = [
         route: '/mappings/:name',
         schema: controller.nameBasedSchema,
         action: controller.remove,
-        description: 'DeActivates selected mapping',
+        description: 'Deactivates selected mapping',
     }
 ];
 
