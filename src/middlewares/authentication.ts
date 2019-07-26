@@ -15,17 +15,22 @@ function getToken(request: Request) {
 
 export async function authenticationMiddleware(request: Request, response: Response, next: NextFunction) {
     const token = getToken(request);
-    if (token) {
-        // tslint:disable-next-line: no-any
-        const decoded: any = await jwt.verify(token, Config.secret);
-        if (!decoded) return response.status(HttpStatusCodes.Unauthorized).end();
-        const user = await User.findOne({ 'email': decoded.email });
-        if (!user) return response.status(HttpStatusCodes.Unauthorized).end();
-        if (decoded.password !== user.password) {
+    try {
+        if (token) {
+            // tslint:disable-next-line: no-any
+            const decoded: any = await jwt.verify(token, Config.secret);
+            if (!decoded) return response.status(HttpStatusCodes.Unauthorized).end();
+            const user = await User.findOne({ 'email': decoded.email });
+            if (!user) return response.status(HttpStatusCodes.Unauthorized).end();
+            if (decoded.password !== user.password) {
+                return response.status(HttpStatusCodes.Unauthorized).end();
+            }
+            next();
+        } else {
             return response.status(HttpStatusCodes.Unauthorized).end();
         }
-        next();
-    } else {
+    }
+    catch{
         return response.status(HttpStatusCodes.Unauthorized).end();
     }
 }
