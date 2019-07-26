@@ -8,6 +8,13 @@ const endpoints: IEndpoint[] = [
         schema: controller.createSchema,
         action: controller.create,
         description: 'Creates a new mapping schema',
+    },
+    {
+        method: Method.Delete,
+        route: '/mappings/:name',
+        schema: controller.nameBasedSchema,
+        action: controller.remove,
+        description: 'DeActivates selected mapping',
     }
 ];
 

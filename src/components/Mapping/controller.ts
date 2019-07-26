@@ -14,10 +14,6 @@ export async function create(
     res: Response,
 ): Promise<void> {
     const model = req.body as IMapping;
-
-    // tslint:disable-next-line: no-console
-    console.log('model : ' + JSON.stringify(model));
-
     const result = await service.create(model);
     res.status(HttpStatusCodes.OK).json(result);
 }
@@ -40,3 +36,15 @@ export const createSchema = {
     },
 }
 
+export const nameBasedSchema = {
+    params: {
+        name: Joi.string().required()
+    }
+}
+
+export async function remove(req: Request,
+    res: Response,
+): Promise<void> {
+    await service.remove(req.params.name);
+    res.status(HttpStatusCodes.OK).end();
+}

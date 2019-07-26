@@ -7,6 +7,7 @@ export interface IMapping extends mongoose.Document {
     fileType: string; //// csv or excel
     headerRow: number;
     startRow: number;
+    isActive: boolean;
     columnMappings: IColumnMapping[];
 }
 
@@ -20,6 +21,7 @@ const mappingSchema = new mongoose.Schema({
     name: { type: String, required: true, index: { unique: true } },
     owner: { type: String, required: true },
     createdDate: { type: Date },
+    isActive: { type: Boolean },
     updatedDate: { type: Date },
     fileType: { type: String, required: true },
     headerRow: { type: Number, required: true },
@@ -39,6 +41,7 @@ mappingSchema.pre('save', function (next: any) {
 
     if (this.isNew) {
         this.createdDate = Date.now();
+        this.isActive = true;
     }
 
     return next();
