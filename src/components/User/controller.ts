@@ -8,12 +8,9 @@ import * as service from './service';
  * @param {Response} res
  * @returns {Promise < void >}
  */
-export async function findAll(
-    req: Request,
-    res: Response,
-): Promise<void> {
-    const users = await service.findAll();
-    res.status(HttpStatusCodes.OK).json(users);
+export async function findAll(req: Request, res: Response): Promise<void> {
+  const users = await service.findAll();
+  res.status(HttpStatusCodes.OK).json(users);
 }
 
 /**
@@ -22,19 +19,15 @@ export async function findAll(
  * @param {Response} res
  * @returns {Promise < void >}
  */
-export async function findOne(
-    req: Request,
-    res: Response
-) {
+export async function findOne(req: Request, res: Response) {
+  const user = await service.findUser(req.params.email);
+  if (!user) {
+    res.status(HttpStatusCodes.NotFound);
 
-    const user = await service.findUser(req.params.email);
-    if (!user) {
-        res.status(HttpStatusCodes.NotFound);
+    return;
+  }
 
-        return;
-    }
-
-    res.status(HttpStatusCodes.OK).json(user);
+  res.status(HttpStatusCodes.OK).json(user);
 }
 
 /**
@@ -43,14 +36,14 @@ export async function findOne(
  * @param {Response} res
  * @returns {Promise < void >}
  */
-export async function create(
-    req: Request,
-    res: Response
-): Promise<void> {
+export async function create(req: Request, res: Response): Promise<void> {
+  const user = await service.create(
+    req.body.email,
+    req.body.password,
+    req.body.name
+  );
 
-    const user = await service.create(req.body.email, req.body.password, req.body.name);
-
-    res.status(HttpStatusCodes.Created).json(user);
+  res.status(HttpStatusCodes.Created).json(user);
 }
 
 /**
@@ -61,28 +54,37 @@ export async function create(
  * @returns {Promise < void >}
  */
 export async function remove(
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction
 ): Promise<void> {
-    await service.remove(req.params.email);
-    res.status(HttpStatusCodes.OK);
+  await service.remove(req.params.email);
+  res.status(HttpStatusCodes.OK);
 }
 
 export const singleUserSchema = {
-    params: {
-        email: Joi.string().email().required()
-    },
-}
+  params: {
+    email: Joi.string()
+      .email()
+      .required()
+  }
+};
 
 const defaulMaxLength = 255;
 const defaultMinPassword = 8;
 const defaultMaxPassword = 16;
 export const createUserSchema = {
-    body: {
-        email: Joi.string().email().required(),
-        password: Joi.string().min(defaultMinPassword).max(defaultMaxPassword).required(),
-        name: Joi.string().min(1).max(defaulMaxLength).required()
-    },
-}
-
+  body: {
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string()
+      .min(defaultMinPassword)
+      .max(defaultMaxPassword)
+      .required(),
+    name: Joi.string()
+      .min(1)
+      .max(defaulMaxLength)
+      .required()
+  }
+};

@@ -8,33 +8,38 @@ import { User } from '../User/model';
 export async function generateToken(email: string, password: string) {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new AppError('InvalidUser', HttpStatusCodes.BadRequest, 'No user found');
+    throw new AppError(
+      'InvalidUser',
+      HttpStatusCodes.BadRequest,
+      'No user found'
+    );
   }
   if (!bcrypt.compareSync(password, user.password)) {
-    throw new AppError('InvalidPassword', HttpStatusCodes.BadRequest, 'Invalid Credential');
+    throw new AppError(
+      'InvalidCredential',
+      HttpStatusCodes.BadRequest,
+      'Invalid Credential'
+    );
   }
 
-  return jwt.sign({ email, password },
-    Config.secret,
-    {
-      expiresIn: 900
-    }
-  );
-
-};
+  return jwt.sign({ email, password }, Config.secret, {
+    expiresIn: Config.tokenTime
+  });
+}
 
 export async function create(email: string, password: string, name: string) {
-  const user = { email, password, name };
-
-  return User.create(user);
+  return User.create({ email, password, name });
 }
 
 export async function remove(email: string) {
-  const user = await this.findUser(email);
+  const user = await User.findOne({ email });
   if (!user) {
-    throw new AppError('InvalidUser', HttpStatusCodes.NotFound, 'No user found, email :' + email);
+    throw new AppError(
+      'InvalidUser',
+      HttpStatusCodes.NotFound,
+      'No user found, email :' + email
+    );
   }
 
   return User.remove(user);
 }
-

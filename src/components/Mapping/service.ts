@@ -11,6 +11,6 @@ export async function get(name: string) {
   return Mapping.findOne({ name });
 }
 
-export async function remove(name: string) {
+export async function deactivate(name: string) {
   return Mapping.findOneAndUpdate({ name }, { isActive: false });
 }

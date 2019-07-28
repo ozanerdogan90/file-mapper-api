@@ -12,7 +12,7 @@ const logger: Logger = Container.get('logger');
 function stop(error: Error): void {
   logger.error(
     'Unhandled exception of rejection happened' +
-    (error && error.message ? `: ${error.message}` : ''),
+      (error && error.message ? `: ${error.message}` : ''),
     error
   );
 
@@ -21,7 +21,6 @@ function stop(error: Error): void {
 
 process.addListener('unhandledRejection', stop);
 process.addListener('uncaughtException', stop);
-
 
 // tslint:disable-next-line: no-floating-promises
 connectDb().then(() => {
@@ -36,5 +35,4 @@ connectDb().then(() => {
       `server is listening on http://localhost:${Config.port} in '${process.env.NODE_ENV}' mode`
     );
   });
-
 });
