@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as path from 'path';
 import 'reflect-metadata'; // We need this in order to use @Decorators
-import Container from 'typedi';
 import { routings } from './components';
 import { middlewares } from './middlewares';
 import { authenticationMiddleware } from './middlewares/authentication';
@@ -45,4 +44,3 @@ export function injectAction(action: Action) {
 }
 
 app.use(middlewares.applyAfter);
-Container.set('logger', logger);

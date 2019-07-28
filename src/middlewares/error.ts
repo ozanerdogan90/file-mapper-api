@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { Container } from 'typedi';
-import { Logger } from 'winston';
 import { AppError } from '../types/error/app-error';
+import logger from '../types/logger/logger';
 
 export interface IErrorResult {
   ok: boolean;
@@ -19,7 +18,6 @@ export function errorMiddleware(
   response: Response,
   next: NextFunction
 ) {
-  const logger: Logger = Container.get('logger');
   const result: IErrorResult = {
     ok: false,
     status: 500,
