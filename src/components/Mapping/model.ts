@@ -15,6 +15,14 @@ export interface IColumnMapping extends mongoose.Document {
     from: string;
     to: string;
     isMandatory: boolean;
+    fieldTransformations: IFieldTransformation[];
+}
+
+export interface IFieldTransformation extends mongoose.Document {
+    extractRegex: string;
+    replaceRegex: string;
+    ignoreRegex: string;
+    multiplyValue: number;
 }
 
 const mappingSchema = new mongoose.Schema({
@@ -29,7 +37,14 @@ const mappingSchema = new mongoose.Schema({
     columnMappings: [{
         from: { type: String, required: true, },
         to: { type: String, required: true },
-        isMandatory: { type: Boolean, required: true }
+        isMandatory: { type: Boolean, required: true },
+        fieldTransformations: [{
+            extractRegex: { type: String, required: false },
+            replaceRegex: { type: String, required: false },
+            ignoreRegex: { type: String, required: false },
+            multiplyValue: { type: Number, required: false },
+        }
+        ]
     }],
 });
 

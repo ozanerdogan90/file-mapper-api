@@ -41,10 +41,18 @@ export async function get(req: Request,
     res.status(HttpStatusCodes.OK).json(result);
 }
 
+const fieldTransformationSchema = Joi.object().keys({
+    extractRegex: Joi.string(),
+    replaceRegex: Joi.string(),
+    ignoreRegex: Joi.string(),
+    multiplyValue: Joi.number()
+})
+
 const columnMappingSchema = Joi.object().keys({
     from: Joi.string().required(),
     to: Joi.string().required(),
-    isMandatory: Joi.boolean().required()
+    isMandatory: Joi.boolean().required(),
+    fieldTransformations: Joi.array().items(fieldTransformationSchema)
 })
 
 const maxOwnerName = 10;

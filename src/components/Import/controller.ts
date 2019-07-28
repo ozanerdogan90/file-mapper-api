@@ -18,9 +18,6 @@ export async function importFile(
     }
     const file = req.files.importFile as UploadedFile;
     const result = await service.extractFile(file, req.params.name);
-    // tslint:disable-next-line: no-console
-    console.dir(result);
-
     res.status(HttpStatusCodes.Created).json(result);
 }
 

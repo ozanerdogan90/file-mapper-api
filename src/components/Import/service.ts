@@ -2,7 +2,7 @@ import { UploadedFile } from 'express-fileupload';
 import xlsx from 'node-xlsx';
 import { AppError } from '../../types/error/app-error';
 import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
-import { IColumnMapping } from '../Mapping/model';
+import { IColumnMapping, IFieldTransformation } from '../Mapping/model';
 import * as mappingService from '../Mapping/service';
 
 export async function extractFile(file: UploadedFile, mappingName: string) {
@@ -36,14 +36,74 @@ function mapRows(headerRows: string[], rows: Array<[]>, columns: IColumnMapping[
 
   for (const column of columns) {
 
-    const from = column.from;
     const columnIndex = headerRows.findIndex(x => column.from === x);
     if (columnIndex !== -1) {
       for (let k = 0; k < rows.length; k++) {
-        map[k] = { [from]: rows[k][columnIndex] };
+        map[k] = { [column.to]: applyfieldTransformations(rows[k][columnIndex], column.fieldTransformations) };
       }
     }
   }
 
   return map;
+}
+
+function applyfieldTransformations(value: string, fieldTransformations: IFieldTransformation[]) {
+  if (!fieldTransformations || fieldTransformations.length === 0) {
+    return value;
+  }
+
+  let result = value;
+  for (const fieldTransformation of fieldTransformations) {
+    result = applyExtractRegex(result, fieldTransformation);
+    result = applyReplaceRegex(result, fieldTransformation);
+    result = applyIgnoreRegex(result, fieldTransformation);
+    result = applyMultiplyValue(result, fieldTransformation);
+  }
+
+  return result;
+}
+
+function applyExtractRegex(value: string, fieldTransformation: IFieldTransformation): string {
+  if (fieldTransformation.extractRegex && !fieldTransformation.replaceRegex && !fieldTransformation.ignoreRegex) {
+    const match = value.match(fieldTransformation.extractRegex);
+    if (match && match.length > 0) {
+      return match[0];
+    }
+  }
+
+  return value;
+}
+
+function applyReplaceRegex(value: string, fieldTransformation: IFieldTransformation): string {
+  if (fieldTransformation.extractRegex && fieldTransformation.replaceRegex) {
+    const match = value.match(fieldTransformation.extractRegex);
+    if (match && match.length > 0) {
+      const extractedValue = match[0];
+
+      return extractedValue.replace(extractedValue, fieldTransformation.replaceRegex);
+    }
+  }
+
+  return value;
+}
+
+function applyIgnoreRegex(value: string, fieldTransformation: IFieldTransformation): string {
+  if (fieldTransformation.extractRegex && fieldTransformation.ignoreRegex) {
+    const match = value.match(fieldTransformation.extractRegex);
+    if (match && match.length > 0) {
+      const extractedValue = match[0];
+
+      return extractedValue.replace(extractedValue, '');
+    }
+  }
+
+  return value;
+}
+
+function applyMultiplyValue(value: string, fieldTransformation: IFieldTransformation): string {
+  if (fieldTransformation.multiplyValue) {
+    return (parseFloat(value) * fieldTransformation.multiplyValue).toString();
+  }
+
+  return value;
 }
