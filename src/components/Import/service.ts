@@ -1,11 +1,17 @@
 import { UploadedFile } from 'express-fileupload';
 import xlsx from 'node-xlsx';
+import * as path from 'path';
 import { AppError } from '../../types/error/app-error';
 import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
 import { IColumnMapping, IFieldTransformation } from '../Mapping/model';
 import * as mappingService from '../Mapping/service';
+import { Config } from './../../config/env';
 
 export async function extractFile(file: UploadedFile, mappingName: string) {
+  if (Config.allowedExtensions.findIndex(x => x === path.extname(file.name)) === -1) {
+    throw new AppError('InvalidFileExtension', HttpStatusCodes.BadRequest);
+  }
+
   const mapping = await mappingService.get(mappingName);
   if (!mapping) {
     throw new AppError('MappingNotFound', HttpStatusCodes.BadRequest);

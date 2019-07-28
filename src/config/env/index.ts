@@ -13,6 +13,7 @@ interface IConfig {
   };
   secret: string;
   tokenTime: number;
+  allowedExtensions: string[];
 }
 
 const NODE_ENV: string = process.env.NODE_ENV || 'development';
@@ -24,7 +25,8 @@ const development: IConfig = {
     MONGODB_DB_MAIN: process.env.MONGODB_DB_MAIN || 'users_db'
   },
   secret: process.env.SECRET || '@QEGTUI',
-  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime
+  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime,
+  allowedExtensions: ['.csv', '.xls', '.xlsx']
 };
 
 const production: IConfig = {
@@ -34,7 +36,8 @@ const production: IConfig = {
     MONGODB_DB_MAIN: process.env.MONGODB_DB_MAIN || 'users_db'
   },
   secret: process.env.SECRET || '@QEGTUI',
-  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime
+  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime,
+  allowedExtensions: ['.csv', '.xls', '.xlsx']
 };
 
 const test: IConfig = {
@@ -44,7 +47,8 @@ const test: IConfig = {
     MONGODB_DB_MAIN: 'test_users_db'
   },
   secret: process.env.SECRET || '@QEGTUI',
-  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime
+  tokenTime: parseInt(process.env.TOKEN_TIME, defaultRadix) || defaultTokenTime,
+  allowedExtensions: ['.csv', '.xls', '.xlsx']
 };
 
 const config: {
