@@ -3,12 +3,7 @@ import { UploadedFile } from 'express-fileupload';
 import * as Joi from 'joi';
 import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
 import * as service from './service';
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise < void >}
- */
+
 export async function importFile(req: Request, res: Response): Promise<void> {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res

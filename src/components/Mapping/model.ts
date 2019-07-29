@@ -52,7 +52,7 @@ const mappingSchema = new mongoose.Schema({
 });
 
 // tslint:disable-next-line: no-any
-mappingSchema.pre('save', function (next: any) {
+mappingSchema.pre('save', function(next: any) {
   if (this.isModified) {
     this.updatedDate = Date.now();
   }

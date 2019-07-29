@@ -32,7 +32,6 @@ export function errorMiddleware(
     result.message = 'Internal Server Error';
   }
 
-
   logger.error(JSON.stringify({ error, cid: correlator.getId() }));
 
   response.setHeader('X-Correlation-Id', correlator.getId());

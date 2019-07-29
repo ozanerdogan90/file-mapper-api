@@ -9,7 +9,7 @@ export const server: express.Application = app;
 function stop(error: Error): void {
   logger.error(
     'Unhandled exception of rejection happened' +
-    (error && error.message ? `: ${error.message}` : ''),
+      (error && error.message ? `: ${error.message}` : ''),
     error
   );
 

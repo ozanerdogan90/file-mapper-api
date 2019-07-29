@@ -1,10 +1,4 @@
-# Node.js Express API with TypeScript 3
-
-
-![CircleCI branch](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg?style=flat-square)
-![npm](https://img.shields.io/npm/dm/localeval.svg?style=flat-square)
-![Plugin on redmine.org](https://img.shields.io/redmine/plugin/stars/redmine_xlsx_format_issue_exporter.svg?style=flat-square)
-![onix](https://img.shields.io/badge/onix-systems-blue.svg)
+# File mapper api
 
 > Node.js Express API with TypeScript 3. Supports MongoDB
 

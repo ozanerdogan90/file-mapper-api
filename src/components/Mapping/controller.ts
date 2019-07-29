@@ -3,12 +3,7 @@ import * as Joi from 'joi';
 import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
 import { IMapping } from './model';
 import * as service from './service';
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise < void >}
- */
+
 export async function create(req: Request, res: Response): Promise<void> {
   const model = req.body as IMapping;
   const result = await service.create(model);

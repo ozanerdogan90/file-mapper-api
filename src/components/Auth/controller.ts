@@ -2,12 +2,7 @@ import { Request, Response } from 'express';
 import * as Joi from 'joi';
 import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
 import * as service from './service';
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise < void >}
- */
+
 export async function generateToken(
   req: Request,
   res: Response
@@ -16,12 +11,6 @@ export async function generateToken(
   res.status(HttpStatusCodes.OK).json(token);
 }
 
-/**
- * @export
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise < void >}
- */
 export async function register(req: Request, res: Response) {
   const user = await service.create(
     req.body.email,
@@ -29,9 +18,7 @@ export async function register(req: Request, res: Response) {
     req.body.name
   );
   if (!user) {
-    res.status(HttpStatusCodes.NotFound);
-
-    return;
+    return res.status(HttpStatusCodes.NotFound).end();
   }
 
   res.status(HttpStatusCodes.OK).json(user.email);
@@ -45,7 +32,7 @@ export const generateTokenSchema = {
       .email()
       .required(),
     password: Joi.string()
-      .min(1)
+      .min(defaultMinPassword)
       .max(defaulMaxLength)
       .required()
   }

@@ -18,7 +18,8 @@
     "start": "tsc --skipLibCheck && node ./dist/index.js",
     "start-dev": "nodemon -e ts -w ./src -i 'src/**/*.spec.ts' -x ts-node -- ./src/index.ts",
     "ts:watch": "tsc -w",
-    "test": "jest --runInBand --config=./jest.config.js",
+    "test-unit": "jest --runInBand --config=./jest.config.js",
+    "test-integration": "jest --runInBand --config=./tests/jest.config.js",
     "prettier": "prettier --write --single-quote src/**/*.ts",
     "lint": "tslint -p tsconfig.json src/**/*.ts",
     "swagger": "npm run build && node ./swagger/swaggerSchemaGenerator.js"
@@ -27,7 +28,8 @@
     "*.ts": [
       "npm run lint",
       "npm run prettier",
-      "npm run test",
+      "npm run test-unit",
+      "npm run test-integration",
       "npm run swagger"
     ]
   },
@@ -81,6 +83,7 @@
     "@types/swagger-jsdoc": "0.0.2",
     "@types/swagger-ui-express": "3.0.0",
     "chai": "4.2.0",
+    "chai-http": "^4.3.0",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
     "joi-to-swagger": "^3.2.0",

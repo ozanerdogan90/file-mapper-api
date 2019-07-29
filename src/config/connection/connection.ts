@@ -15,7 +15,6 @@ const connectOptions: IConnectOptions = {
   reconnectInterval: 1000,
   useNewUrlParser: true
 };
-
 const MONGO_URI: string = `${Config.database.MONGODB_URI}${Config.database.MONGODB_DB_MAIN}`;
 
 export const connectDb = () => {
