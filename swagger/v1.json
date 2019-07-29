@@ -1,0 +1,1781 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "File Mapper Api",
+    "description": "Map your csv and excel files",
+    "version": "1.0",
+    "termsOfService": "",
+    "contact": {
+      "name": "File Mapper Api"
+    }
+  },
+  "paths": {
+    "/users/{email}": {
+      "get": {
+        "description": "Get user by id",
+        "operationId": "root_findOne",
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Create a new user",
+        "operationId": "root_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password",
+                  "name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 16
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "root"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get list of users",
+        "operationId": "root_findAll",
+        "tags": [
+          "root"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "description": "Delete user by id",
+        "operationId": "root_remove",
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "description": "Generate token via email adress and password",
+        "operationId": "root_generateToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "root"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "Register a new user",
+        "operationId": "root_register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password",
+                  "name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 16
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "root"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mappings": {
+      "post": {
+        "description": "Creates a new mapping schema",
+        "operationId": "root_create1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "owner",
+                  "headerRow",
+                  "startRow"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "fileType": {
+                    "type": "string",
+                    "enum": [
+                      "csv",
+                      "excel"
+                    ]
+                  },
+                  "headerRow": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "startRow": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "columnMappings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "from",
+                        "to",
+                        "isMandatory"
+                      ],
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "isMandatory": {
+                          "type": "boolean"
+                        },
+                        "fieldTransformations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "extractRegex": {
+                                "type": "string"
+                              },
+                              "replaceRegex": {
+                                "type": "string"
+                              },
+                              "ignoreRegex": {
+                                "type": "boolean"
+                              },
+                              "multiplyValue": {
+                                "type": "number",
+                                "format": "float"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "root"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mappings/{name}": {
+      "put": {
+        "description": "Updates an existing mapping",
+        "operationId": "root_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "owner",
+                  "headerRow",
+                  "startRow"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "fileType": {
+                    "type": "string",
+                    "enum": [
+                      "csv",
+                      "excel"
+                    ]
+                  },
+                  "headerRow": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "startRow": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "columnMappings": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "from",
+                        "to",
+                        "isMandatory"
+                      ],
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "isMandatory": {
+                          "type": "boolean"
+                        },
+                        "fieldTransformations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "extractRegex": {
+                                "type": "string"
+                              },
+                              "replaceRegex": {
+                                "type": "string"
+                              },
+                              "ignoreRegex": {
+                                "type": "boolean"
+                              },
+                              "multiplyValue": {
+                                "type": "number",
+                                "format": "float"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Gets a mapping by name",
+        "operationId": "root_get",
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deactivates selected mapping",
+        "operationId": "root_deactivate",
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/imports/{name}": {
+      "post": {
+        "description": "Import a file",
+        "operationId": "root_importFile",
+        "tags": [
+          "root"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "title": "Successful response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "400": {
+            "title": "Bad Request",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 400
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "ValidationError"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error in body parameters."
+              }
+            }
+          },
+          "403": {
+            "title": "Forbidden",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "404": {
+            "title": "Not Found response",
+            "type": "object",
+            "properties": {
+              "statusCode": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 200
+              },
+              "errorMessage": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          },
+          "500": {
+            "title": "Internal Server Error",
+            "type": "object",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "Internal parameter",
+                "example": false
+              },
+              "status": {
+                "type": "Integer",
+                "description": "Internal parameter",
+                "example": 500
+              },
+              "error": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "Error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Internal parameter",
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "200": {
+        "title": "Successful response",
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "Integer",
+            "description": "Internal parameter",
+            "example": 200
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "OK"
+          }
+        }
+      },
+      "400": {
+        "title": "Bad Request",
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Internal parameter",
+            "example": false
+          },
+          "status": {
+            "type": "Integer",
+            "description": "Internal parameter",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "ValidationError"
+          },
+          "message": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "Error in body parameters."
+          }
+        }
+      },
+      "403": {
+        "title": "Forbidden",
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Internal parameter",
+            "example": false
+          },
+          "status": {
+            "type": "Integer",
+            "description": "Internal parameter",
+            "example": 500
+          },
+          "error": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "Error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "OK"
+          }
+        }
+      },
+      "404": {
+        "title": "Not Found response",
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "Integer",
+            "description": "Internal parameter",
+            "example": 200
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "OK"
+          }
+        }
+      },
+      "500": {
+        "title": "Internal Server Error",
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "description": "Internal parameter",
+            "example": false
+          },
+          "status": {
+            "type": "Integer",
+            "description": "Internal parameter",
+            "example": 500
+          },
+          "error": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "Error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Internal parameter",
+            "example": "OK"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "API key to authorize requests.",
+        "scheme": "bearer",
+        "bearerFormat": "Bearer",
+        "name": "appid",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "externalDocs": {
+    "description": "API Documentation",
+    "url": "/swagger"
+  }
+}

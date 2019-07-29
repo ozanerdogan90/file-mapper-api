@@ -7,7 +7,6 @@ import { authenticationMiddleware } from './middlewares/authentication';
 import { validationMiddleware } from './middlewares/validation';
 import { Action } from './types/endpoint/endpoint';
 import { HttpStatusCodes } from './types/http/HttpStatusCodes';
-import logger from './types/logger/logger';
 
 export const app: express.Application = express();
 

@@ -20,13 +20,15 @@
     "ts:watch": "tsc -w",
     "test": "jest --runInBand --config=./jest.config.js",
     "prettier": "prettier --write --single-quote src/**/*.ts",
-    "lint": "tslint -p tsconfig.json src/**/*.ts"
+    "lint": "tslint -p tsconfig.json src/**/*.ts",
+    "swagger": "npm run build && node ./swagger/swaggerSchemaGenerator.js"
   },
   "lint-staged": {
     "*.ts": [
       "npm run lint",
       "npm run prettier",
-      "npm run test"
+      "npm run test",
+      "npm run swagger"
     ]
   },
   "files": [
@@ -79,6 +81,7 @@
     "chai": "4.2.0",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
+    "joi-to-swagger": "^3.2.0",
     "jsdoc": "3.5.5",
     "lint-staged": "^9.2.0",
     "nodemon": "^1.18.10",

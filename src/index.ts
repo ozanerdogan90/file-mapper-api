@@ -1,18 +1,15 @@
 import * as express from 'express';
-import Container from 'typedi';
-import { Logger } from 'winston';
 import { app } from './app';
 import { connectDb } from './config/connection/connection';
 import { Config } from './config/env';
+import logger from './types/logger/logger';
 
 export const server: express.Application = app;
-
-const logger: Logger = Container.get('logger');
 
 function stop(error: Error): void {
   logger.error(
     'Unhandled exception of rejection happened' +
-      (error && error.message ? `: ${error.message}` : ''),
+    (error && error.message ? `: ${error.message}` : ''),
     error
   );
 
