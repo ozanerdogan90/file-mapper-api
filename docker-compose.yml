@@ -14,5 +14,7 @@ services:
     ports:
       - 3000:3000
     restart: on-failure
+    environment:
+      MONGODB_URI: 'mongodb://mongo:27017'
     depends_on:
       - db

@@ -1,4 +1,6 @@
-export class AppError {
+export class AppError implements Error {
+  public message: string;
+  public stack?: string;
   public readonly name: string;
   public readonly httpCode: number;
   public readonly description: string;

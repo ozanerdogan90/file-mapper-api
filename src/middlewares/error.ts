@@ -10,10 +10,9 @@ export interface IErrorResult {
   validationErrors?: object;
 }
 
-// tslint:disable-next-line:typedef
 export function errorMiddleware(
   // tslint:disable-next-line: no-any
-  error: any,
+  error: Error,
   request: Request,
   response: Response,
   next: NextFunction
