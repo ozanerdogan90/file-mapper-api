@@ -92,8 +92,6 @@
     "nodemon": "^1.18.10",
     "prettier": "1.18.2",
     "source-map-loader": "0.2.4",
-    "supertest": "4.0.2",
-    "swagger-jsdoc": "3.2.7",
     "swagger-ui-express": "4.0.2",
     "ts-jest": "^24.0.2",
     "tslint": "5.8.0",
@@ -101,7 +99,6 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
     "tslint-eslint-rules": "5.4.0",
-    "typemoq": "^2.1.0",
     "typescript": "3.4.3"
   }
 }
