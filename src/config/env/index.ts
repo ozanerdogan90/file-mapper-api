@@ -21,7 +21,7 @@ const NODE_ENV: string = process.env.NODE_ENV || 'development';
 const development: IConfig = {
   port: parseInt(process.env.PORT, defaultRadix) || defaultPort,
   database: {
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/',
+    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://mongo:27017/',
     MONGODB_DB_MAIN: process.env.MONGODB_DB_MAIN || 'users_db'
   },
   secret: process.env.SECRET || '@QEGTUI',
@@ -43,7 +43,7 @@ const production: IConfig = {
 const test: IConfig = {
   port: parseInt(process.env.PORT, defaultRadix) || defaultPort,
   database: {
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017',
+    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://mongo:27017',
     MONGODB_DB_MAIN: 'test_users_db'
   },
   secret: process.env.SECRET || '@QEGTUI',
