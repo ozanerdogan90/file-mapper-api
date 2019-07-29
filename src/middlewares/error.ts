@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import * as correlator from 'express-correlation-id';
 import { AppError } from '../types/error/app-error';
 import logger from '../types/logger/logger';
 
@@ -32,8 +33,10 @@ export function errorMiddleware(
     result.message = 'Internal Server Error';
   }
 
-  logger.error(JSON.stringify(error));
 
+  logger.error(JSON.stringify({ error, cid: correlator.getId() }));
+
+  response.setHeader('X-Correlation-Id', correlator.getId());
   response
     .status(result.status)
     .json(result)
