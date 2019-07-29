@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as Joi from 'joi';
-import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../../types/http/http-status-code';
 import * as service from './service';
 
 export async function generateToken(

@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 import { IValidationSchema } from '../types/endpoint/endpoint';
 import { AppError } from '../types/error/app-error';
 import { errorFormatter } from '../types/error/error-formatter';
-import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../types/http/http-status-code';
 
 export function validationMiddleware(schema: IValidationSchema) {
   return (req: Request, res: Response, next: NextFunction) => {

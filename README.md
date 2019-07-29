@@ -26,6 +26,8 @@ This project aims to transform excel/csv files via defined schemas.Supports colu
 ##### Code analysis 
 - Ts-lint
 - Prettier
+##### Logging
+- Winston
 
 
 ## Requirements
@@ -76,6 +78,7 @@ This project aims to transform excel/csv files via defined schemas.Supports colu
 │       ├── request-response-logger.ts
 │       ├── validation.ts
 │       └── index.ts
+```
 
 ## Running the API
 ### Development

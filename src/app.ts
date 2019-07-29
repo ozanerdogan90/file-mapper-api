@@ -6,7 +6,7 @@ import { middlewares } from './middlewares';
 import { authenticationMiddleware } from './middlewares/authentication';
 import { validationMiddleware } from './middlewares/validation';
 import { Action } from './types/endpoint/endpoint';
-import { HttpStatusCodes } from './types/http/HttpStatusCodes';
+import { HttpStatusCodes } from './types/http/http-status-code';
 
 export const app: express.Application = express();
 

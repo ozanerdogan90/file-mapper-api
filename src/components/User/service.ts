@@ -1,5 +1,5 @@
 import { AppError } from '../../types/error/app-error';
-import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../../types/http/http-status-code';
 import { User } from './model';
 
 export async function findUser(email: string) {

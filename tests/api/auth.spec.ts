@@ -1,7 +1,7 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../../src/app';
-import { HttpStatusCodes } from '../../src/types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../../src/types/http/http-status-code';
 import * as dbHelper from '../helpers/database';
 
 chai.use(chaiHttp);

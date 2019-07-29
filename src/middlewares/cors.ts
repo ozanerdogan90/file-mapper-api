@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../types/http/http-status-code';
 
 export function corsMiddleware(
   request: Request,

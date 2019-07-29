@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { Config } from '../../config/env';
 import { AppError } from '../../types/error/app-error';
-import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../../types/http/http-status-code';
 import { User } from '../User/model';
 
 export async function generateToken(email: string, password: string) {

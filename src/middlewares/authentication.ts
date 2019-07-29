@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { User } from '../components/User/model';
 import { Config } from '../config/env';
-import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../types/http/http-status-code';
 
 function getToken(request: Request) {
   const token = request.headers.authorization;

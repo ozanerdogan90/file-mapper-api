@@ -2,7 +2,7 @@ import { UploadedFile } from 'express-fileupload';
 import xlsx from 'node-xlsx';
 import * as path from 'path';
 import { AppError } from '../../types/error/app-error';
-import { HttpStatusCodes } from '../../types/http/HttpStatusCodes';
+import { HttpStatusCodes } from '../../types/http/http-status-code';
 import logger from '../../types/logger/logger';
 import { IColumnMapping, IFieldTransformation } from '../Mapping/model';
 import * as mappingService from '../Mapping/service';
