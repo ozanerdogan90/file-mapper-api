@@ -12,7 +12,6 @@ export interface IErrorResult {
 }
 
 export function errorMiddleware(
-  // tslint:disable-next-line: no-any
   error: Error,
   request: Request,
   response: Response,

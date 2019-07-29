@@ -8,7 +8,6 @@ import { errorMiddleware } from './error';
 import { notfoundMiddleware } from './notfound';
 import { logRequestStartMiddleware } from './request-response-logger';
 
-// tslint:disable-next-line:typedef
 export const middlewares = {
   applyBefore: [
     helmet(),

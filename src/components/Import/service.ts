@@ -20,7 +20,6 @@ export async function extractFile(file: UploadedFile, mappingName: string) {
   if (!mapping) {
     throw new AppError('MappingNotFound', HttpStatusCodes.BadRequest);
   }
-  // tslint:disable-next-line: no-any
   const data: Array<[]> = xlsx.parse(file.data)[0].data;
 
   if (!data || data.length === 0) {

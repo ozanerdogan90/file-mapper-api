@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpStatusCodes } from '../types/http/HttpStatusCodes';
 
-// tslint:disable-next-line:typedef
 export function corsMiddleware(
   request: Request,
   response: Response,
