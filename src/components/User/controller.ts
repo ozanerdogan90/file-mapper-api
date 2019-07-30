@@ -47,16 +47,16 @@ export const singleUserSchema = {
 };
 
 const defaulMaxLength = 255;
-const defaultMinPassword = 8;
-const defaultMaxPassword = 16;
+const defaultMinPasswordLength = 8;
+const defaultMaxPasswordLength = 16;
 export const createUserSchema = {
   body: {
     email: Joi.string()
       .email()
       .required(),
     password: Joi.string()
-      .min(defaultMinPassword)
-      .max(defaultMaxPassword)
+      .min(defaultMinPasswordLength)
+      .max(defaultMaxPasswordLength)
       .required(),
     name: Joi.string()
       .min(1)

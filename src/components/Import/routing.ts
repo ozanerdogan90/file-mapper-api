@@ -7,7 +7,7 @@ const endpoints: IEndpoint[] = [
     route: '/imports/:name',
     schema: controller.nameBasedSchema,
     action: controller.importFile,
-    description: 'Import a file'
+    description: 'Imports a file'
   }
 ];
 

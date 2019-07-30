@@ -7,7 +7,7 @@ const endpoints: IEndpoint[] = [
     route: '/users/:email',
     schema: controller.singleUserSchema,
     action: controller.findOne,
-    description: 'Get user by id'
+    description: 'Get user by email'
   },
   {
     method: Method.Post,
@@ -24,10 +24,10 @@ const endpoints: IEndpoint[] = [
   },
   {
     method: Method.Delete,
-    route: '/users/:id',
+    route: '/users/:email',
     action: controller.remove,
     schema: controller.singleUserSchema,
-    description: 'Delete user by id'
+    description: 'Delete user by email'
   }
 ];
 

@@ -18,7 +18,7 @@ describe('/auth service', () => {
       expect(result).not.toBe(undefined);
     });
 
-    test('Undefined user should throw error', async () => {
+    test('undefined user should throw error', async () => {
       jest
         .spyOn(User, 'findOne')
         .mockImplementation(() => Promise.resolve(undefined));
@@ -30,7 +30,7 @@ describe('/auth service', () => {
       }
     });
 
-    test('Invalid password should throw error', async () => {
+    test('invalid password should throw error', async () => {
       jest.spyOn(User, 'findOne').mockImplementation(() =>
         Promise.resolve({
           email: 'aa@bb.com',
@@ -63,7 +63,7 @@ describe('/auth service', () => {
       jest.spyOn(User, 'remove').mockImplementation(() => Promise.resolve({}));
       await service.remove('');
     });
-    test('invalid user throws error', async () => {
+    test('invalid user should throw error', async () => {
       jest
         .spyOn(User, 'findOne')
         .mockImplementation(() => Promise.resolve(undefined));

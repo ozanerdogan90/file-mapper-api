@@ -24,15 +24,15 @@ export async function register(req: Request, res: Response) {
   res.status(HttpStatusCodes.OK).json(user.email);
 }
 const defaulMaxLength = 255;
-const defaultMinPassword = 8;
-const defaultMaxPassword = 16;
+const defaultMinPasswordLength = 8;
+const defaultMaxPasswordLength = 16;
 export const generateTokenSchema = {
   body: {
     email: Joi.string()
       .email()
       .required(),
     password: Joi.string()
-      .min(defaultMinPassword)
+      .min(defaultMinPasswordLength)
       .max(defaulMaxLength)
       .required()
   }
@@ -44,8 +44,8 @@ export const registerSchema = {
       .email()
       .required(),
     password: Joi.string()
-      .min(defaultMinPassword)
-      .max(defaultMaxPassword)
+      .min(defaultMinPasswordLength)
+      .max(defaulMaxLength)
       .required(),
     name: Joi.string()
       .min(1)

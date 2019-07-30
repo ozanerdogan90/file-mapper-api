@@ -12,8 +12,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 export async function update(req: Request, res: Response): Promise<void> {
   const model = req.body as IMapping;
-  const name = req.params.name;
-  const result = await service.update(name, model);
+  const result = await service.update(req.params.name, model);
   res.status(HttpStatusCodes.OK).json(result);
 }
 
@@ -41,12 +40,12 @@ const columnMappingSchema = Joi.object().keys({
   fieldTransformations: Joi.array().items(fieldTransformationSchema)
 });
 
-const maxOwnerName = 10;
+const maxOwnerNameLength = 10;
 export const createSchema = {
   body: {
     name: Joi.string().required(),
     owner: Joi.string()
-      .max(maxOwnerName)
+      .max(maxOwnerNameLength)
       .required(),
     fileType: Joi.string().valid('csv', 'excel'),
     headerRow: Joi.number().required(),
